@@ -1,16 +1,18 @@
 import Foundation
 import OpenAI
 
-final class FakeGPTSession: GPTSession {
+public final class FakeGPTSession: GPTSession {
     var setOutput: GptModel? = nil
-    
-    func run(_ sessionOperation: SessionOperation, input: GptModel) async -> [GptModel] {
+
+    public init() {}
+
+    public func run(_ sessionOperation: SessionOperation, input: GptModel) async -> [GptModel] {
         return [setOutput!]
     }
 }
 
 @available(macOS 10.15, *)
-final class GPTSessionImpl: GPTSession {
+public final class GPTSessionImpl: GPTSession {
     let client: OpenAI
     let temperature: Double
     let presencePenalty: Double
@@ -19,7 +21,7 @@ final class GPTSessionImpl: GPTSession {
 
     private var runningConversation: [Chat] = []
 
-    init(temperature: Double, presencePenalty: Double, frequencyPenalty: Double, model: Model, client: OpenAI) {
+    public init(temperature: Double, presencePenalty: Double, frequencyPenalty: Double, model: Model, client: OpenAI) {
         self.temperature = temperature
         self.presencePenalty = presencePenalty
         self.frequencyPenalty = frequencyPenalty
@@ -27,7 +29,7 @@ final class GPTSessionImpl: GPTSession {
         self.client = client
     }
 
-    func run(_ sessionOperation: SessionOperation, input: GptModel) async -> [GptModel] {
+    public func run(_ sessionOperation: SessionOperation, input: GptModel) async -> [GptModel] {
             var rootConvo = [
                 sessionOperation.asSystemChat
             ]
@@ -84,7 +86,7 @@ final class GPTSessionImpl: GPTSession {
             return currentOutput
     }
 
-    struct ChatResponse {
+    private struct ChatResponse {
         var chatMessage: Chat? = nil
         var outputModel: GptModel? = nil
         var failed: Bool = false

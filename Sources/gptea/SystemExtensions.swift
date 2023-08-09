@@ -11,7 +11,7 @@ extension GptModel {
 
 // MARK: - SystemPromptable
 
-extension SystemPromptable {
+public extension SystemPromptable {
     var getSystemPrompt: String {
         return """
             [Task]\(outputDescription)
@@ -24,7 +24,7 @@ extension SystemPromptable {
 
 // MARK: - Transformations
 
-extension GptTransformationConfig {
+public extension GptTransformationConfig {
     func makeOutputModel(from jsonString: String) -> Output? {
         return Output.fromJsonString(jsonString)
     }

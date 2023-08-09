@@ -6,7 +6,7 @@ public class AnyTransformation {
     private let _transformationChats: (GptModel) -> [Chat]
     private let _aggTransformer: ([GptModel]) -> GptModel?
 
-    init<T: GptTransformationConfig>(_ transformation: T) {
+    public init<T: GptTransformationConfig>(_ transformation: T) {
         _transformationPrompts = { input in
             guard let input = input as? T.Input else { return [] }
             return transformation.transformationPrompts(input: input)

@@ -19,8 +19,6 @@ public protocol SystemPromptable {
     /// Describes the `Output` model. Provide details about what each key is for. Its recommended to include
     /// the name of your model's class.
     var outputDescription: String { get }
-    /// The system prompt this model provides
-    var getSystemPrompt: String { get }
 }
 
 public protocol GptTransformationConfig: SystemPromptable where ModelType == Output {
@@ -35,7 +33,7 @@ public protocol GptTransformationConfig: SystemPromptable where ModelType == Out
     func aggregationTransformer(_ outputs: [GptModel]) -> GptModel?
 }
 
-protocol ContextProvider: SystemPromptable {
+public protocol ContextProvider: SystemPromptable {
     var contextPrompt: String { get }
     func provide() async -> ModelType
 }

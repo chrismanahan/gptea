@@ -2,9 +2,15 @@ import Foundation
 import OpenAI
 
 public struct SessionOperation {
-    let mainPrompt: String
-    let transformations: [any GptTransformationConfig]
-    let contextProviders: [any ContextProvider]
+    public let mainPrompt: String
+    public let transformations: [any GptTransformationConfig]
+    public let contextProviders: [any ContextProvider]
+
+    public init(mainPrompt: String, transformations: [any GptTransformationConfig], contextProviders: [any ContextProvider] = []) {
+        self.mainPrompt = mainPrompt
+        self.transformations = transformations
+        self.contextProviders = contextProviders
+    }
 
     var asSystemChat: Chat {
         let transformationString = transformations.compactMap { $0.getSystemPrompt }.joined(separator: "\n\n")
