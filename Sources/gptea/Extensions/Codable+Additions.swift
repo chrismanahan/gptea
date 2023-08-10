@@ -1,6 +1,6 @@
 import Foundation
 
-extension Decodable {
+public extension Decodable {
     static func fromJsonString(_ json: String) -> Self? {
         print("Decoding JSON: \(json)")
         let data = Data(json.utf8)
@@ -16,7 +16,7 @@ extension Decodable {
     }
 }
 
-extension Encodable {
+public extension Encodable {
     var asJson: String? {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
@@ -31,7 +31,7 @@ extension Encodable {
     }
 }
 
-extension Encodable where Self: GptModel {
+public extension Encodable where Self: GptModel {
     static func asEmptyJson() -> String {
         do {
             let jsonData = try JSONEncoder().encode(Self.makeEmpty())

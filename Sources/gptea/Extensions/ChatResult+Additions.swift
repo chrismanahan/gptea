@@ -1,7 +1,7 @@
 import Foundation
 import OpenAI
 
-extension ChatResult {
+public extension ChatResult {
     var chatMessage: Chat {
         return choices.first!.message
     }
