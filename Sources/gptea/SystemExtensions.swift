@@ -29,15 +29,15 @@ public extension GptTransformationConfig {
         return Output.fromJsonString(jsonString)
     }
 
-    func preprocess<T: GptModel>(input: T) async -> GptModel {
-        return input
-    }
-
     func aggregationTransformer(_ outputs: [GptModel]) -> GptModel? {
         return nil
     }
 
-    func transformationChats(input: Input) -> [Chat] {
+    func preprocess<I: GptModel, O: GptModel>(input: I) async -> O where I == Input, O == ProcessedInput {
+        return input as! O
+    }
+
+    func transformationChats(input: ProcessedInput) -> [Chat] {
         return transformationPrompts(input: input).map {
             "\($0). Output:\(Output.getClassName()) as JSON.".asChat(.user)
         }

@@ -9,7 +9,7 @@ public class AnyTransformation {
 
     public init<T: GptTransformationConfig>(_ transformation: T) {
         _transformationPrompts = { input in
-            guard let input = input as? T.Input else { return [] }
+            guard let input = input as? T.ProcessedInput else { return [] }
             return transformation.transformationPrompts(input: input)
         }
 
@@ -18,11 +18,10 @@ public class AnyTransformation {
                 .aggregationTransformer(models)
         }
 
-        _preprocess = { input in
-            return await transformation.preprocess(input: input)
-        }
+        _preprocess = { input in input }
+
         _transformationChats = { input in
-            guard let input = input as? T.Input else { return [] }
+            guard let input = input as? T.ProcessedInput else { return [] }
             return transformation.transformationChats(input: input)
         }
     }

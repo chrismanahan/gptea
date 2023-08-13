@@ -6,3 +6,9 @@ public extension String {
         return Chat(role: role, content: self)
     }
 }
+
+extension String: GptModel {
+    public static func makeEmpty() -> String { "" }
+
+    public var asText: String { self }
+}

@@ -27,6 +27,6 @@ let package = Package(
             dependencies: ["OpenAI"]),
         .testTarget(
             name: "gpteaTests",
-            dependencies: ["gptea"]),
+            dependencies: ["gptea", "OpenAI"]),
     ]
 )

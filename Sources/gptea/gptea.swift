@@ -21,16 +21,21 @@ public protocol SystemPromptable {
 
 public protocol GptTransformationConfig: SystemPromptable where ModelType == Output {
     associatedtype Input: GptModel
+    associatedtype ProcessedInput: GptModel
     associatedtype Output: GptModel
 
-    func transformationPrompts<T: GptModel>(input: T) -> [String] where T == Input
-
     /// Optional - Process the original input before transforming it.
-    func preprocess<T: GptModel>(input: T) async -> GptModel
+    func preprocess<I: GptModel, O: GptModel>(input: I) async -> O where I == Input, O == ProcessedInput
+
+    func transformationPrompts<T: GptModel>(input: T) -> [String] where T == ProcessedInput
 
     /// Optional - Implement this method to aggregate multiple outputs (which results from having multiple `transformationPrompts`) into a single model.
     /// - Note:`outputs` need to be of type `Output`
     func aggregationTransformer(_ outputs: [GptModel]) -> GptModel?
+}
+
+public protocol GptPreprocessedTransformationConfig: GptTransformationConfig {
+
 }
 
 public protocol ContextProvider: SystemPromptable {
