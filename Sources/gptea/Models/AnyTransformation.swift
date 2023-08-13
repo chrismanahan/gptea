@@ -18,7 +18,10 @@ public class AnyTransformation {
                 .aggregationTransformer(models)
         }
 
-        _preprocess = { input in input }
+        _preprocess = { input in
+            guard let input = input as? T.Input else { return input}
+            return await transformation.preprocess(input: input)
+        }
 
         _transformationChats = { input in
             guard let input = input as? T.ProcessedInput else { return [] }
