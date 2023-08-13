@@ -1,6 +1,4 @@
 public struct gptea {
-    public private(set) var text = "Hello, World!"
-
     public init() {
     }
 }
@@ -26,7 +24,9 @@ public protocol GptTransformationConfig: SystemPromptable where ModelType == Out
     associatedtype Output: GptModel
 
     func transformationPrompts<T: GptModel>(input: T) -> [String] where T == Input
-    func makeOutputModel(from jsonString: String) -> Output?
+
+    /// Optional - Process the original input before transforming it.
+    func preprocess<T: GptModel>(input: T) async -> GptModel
 
     /// Optional - Implement this method to aggregate multiple outputs (which results from having multiple `transformationPrompts`) into a single model.
     /// - Note:`outputs` need to be of type `Output`

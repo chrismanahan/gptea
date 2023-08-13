@@ -51,7 +51,8 @@ public final class GPTSessionImpl: GPTSession {
                 for output in currentOutput {
                     print("\n--INPUT--")
                     print(output.asJson ?? output.asText)
-                    let chats = anyTransformation.transformationChats(input: output)
+                    let processedInput = await anyTransformation.preprocess(input: output)
+                    let chats = anyTransformation.transformationChats(input: processedInput)
                     validateMappings(chatCount: chats.count, outputsCount: currentOutput.count)
 
                     for chat in chats {

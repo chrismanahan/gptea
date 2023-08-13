@@ -29,6 +29,10 @@ public extension GptTransformationConfig {
         return Output.fromJsonString(jsonString)
     }
 
+    func preprocess<T: GptModel>(input: T) async -> GptModel {
+        return input
+    }
+
     func aggregationTransformer(_ outputs: [GptModel]) -> GptModel? {
         return nil
     }
