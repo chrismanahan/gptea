@@ -13,8 +13,8 @@ public struct SessionOperation {
     }
 
     var asSystemChat: Chat {
-        let transformationString = transformations.compactMap { $0.getSystemPrompt }.joined(separator: "\n\n")
-        let contextProvidersString = contextProviders.compactMap { $0.getSystemPrompt }.joined(separator: "\n\n")
+        let transformationString = transformations.compactMap { $0.getSystemPrompt() }.joined(separator: "\n\n")
+        let contextProvidersString = contextProviders.compactMap { $0.getSystemPrompt() }.joined(separator: "\n\n")
         return """
         \(mainPrompt)\n
         ✍️〔Task〕***[📣SALIENT❗️: VITAL CONTEXT! ALL REQUESTS FROM USER SHOULD RESULT IN JSON OUTPUT USING ANY OF THE FOLLOWING SCHEMA DEFINITIONS!!!***〔/Task〕✍️

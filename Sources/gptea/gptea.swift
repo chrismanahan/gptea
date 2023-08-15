@@ -34,11 +34,8 @@ public protocol GptTransformationConfig: SystemPromptable where ModelType == Out
     func aggregationTransformer(_ outputs: [GptModel]) -> GptModel?
 }
 
-public protocol GptPreprocessedTransformationConfig: GptTransformationConfig {
-
-}
-
-public protocol ContextProvider: SystemPromptable {
-    var contextPrompt: String { get }
-    func provide() async -> ModelType
+public protocol ContextProvider {
+    associatedtype ProvidedType: GptModel
+    var contextSystemPrompt: String { get }
+    func provide() -> ProvidedType
 }

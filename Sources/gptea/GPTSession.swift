@@ -30,14 +30,10 @@ public final class GPTSessionImpl: GPTSession {
     }
 
     public func run(_ sessionOperation: SessionOperation, input: GptModel) async -> [GptModel] {
-            var rootConvo = [
+            let rootConvo = [
                 sessionOperation.asSystemChat
             ]
-            for provider in sessionOperation.contextProviders {
-                let chat = await provider.contextChat()
-                rootConvo.append(chat)
-            }
-
+        
             print("Running session")
             print(rootConvo.map { $0.content })
 

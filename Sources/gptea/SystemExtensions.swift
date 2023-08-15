@@ -12,7 +12,7 @@ extension GptModel {
 // MARK: - SystemPromptable
 
 public extension SystemPromptable {
-    var getSystemPrompt: String {
+    func getSystemPrompt() -> String {
         return """
             [Task]\(outputDescription)
             Use this empty JSON blob to generate instances of \(ModelType.getClassName()):
@@ -39,7 +39,7 @@ public extension GptTransformationConfig {
 
     func transformationChats(input: ProcessedInput) -> [Chat] {
         return transformationPrompts(input: input).map {
-            "\($0). Output:\(Output.getClassName()) as JSON.".asChat(.user)
+            "[Task]\($0). [OutputFormat]:\(Output.getClassName()) as JSON.[/OutputFormat][/Task]".asChat(.user)
         }
     }
 }
@@ -47,10 +47,10 @@ public extension GptTransformationConfig {
 // MARK: - ContextProvider
 
 extension ContextProvider {
-    func contextChat() async -> Chat {
+    func getSystemPrompt() -> String {
         return """
-        \(contextPrompt).\n
-        \(await provide().asJson!)
-        """.asChat(.user)
+        \(contextSystemPrompt).\n
+        \(provide().asJson!)
+        """
     }
 }
