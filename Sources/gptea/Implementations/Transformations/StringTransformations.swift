@@ -9,7 +9,6 @@ import Foundation
 
 struct StringToBulletedListTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = BulletedList
     typealias ModelType = Output
 
@@ -24,7 +23,6 @@ struct StringToBulletedListTransformation: GptTransformationConfig {
 
 struct StringToHaikuTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = Haiku
     typealias ModelType = Output
 
@@ -39,7 +37,6 @@ struct StringToHaikuTransformation: GptTransformationConfig {
 
 struct StringElaborationTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = SimpleText
     typealias ModelType = Output
 
@@ -54,7 +51,6 @@ struct StringElaborationTransformation: GptTransformationConfig {
 
 struct StringToSummaryTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = SimpleText
     typealias ModelType = Output
 
@@ -69,7 +65,6 @@ struct StringToSummaryTransformation: GptTransformationConfig {
 
 struct StringToQuestionListTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = QuestionList
     typealias ModelType = Output
 
@@ -84,7 +79,6 @@ struct StringToQuestionListTransformation: GptTransformationConfig {
 
 struct StringToActionItemsTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = ActionItems
     typealias ModelType = Output
 
@@ -99,7 +93,6 @@ struct StringToActionItemsTransformation: GptTransformationConfig {
 
 struct StringToRhymingCoupletTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = RhymingCouplet
     typealias ModelType = Output
 
@@ -114,7 +107,6 @@ struct StringToRhymingCoupletTransformation: GptTransformationConfig {
 
 struct StringToLimerickTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = Limerick
     typealias ModelType = Output
 
@@ -129,7 +121,6 @@ struct StringToLimerickTransformation: GptTransformationConfig {
 
 struct StringToAcrosticTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = Acrostic
     typealias ModelType = Output
 
@@ -145,7 +136,6 @@ struct StringToAcrosticTransformation: GptTransformationConfig {
 
 struct StringFormalizerTransformation: GptTransformationConfig {
     typealias Input = String
-    typealias ProcessedInput = Input
     typealias Output = SimpleText
     typealias ModelType = Output
 

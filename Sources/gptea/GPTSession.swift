@@ -40,8 +40,8 @@ public final class GPTSessionImpl: GPTSession {
             var currentOutput: [GptModel] = [input]
             var convo = rootConvo
 
-            for transformation in sessionOperation.transformations {
-                let anyTransformation = AnyTransformation(transformation)
+            for transformationType in sessionOperation.transformations {
+                let anyTransformation = transformationType.asAnyTransformation
                 var transformationOutputs: [GptModel] = []
 
                 for output in currentOutput {
@@ -53,8 +53,10 @@ public final class GPTSessionImpl: GPTSession {
 
                     for chat in chats {
                         convo.append(chat)
+                        print(chat.content ?? "")
 
-                        var response = await runConvo(convo: convo, transformation: transformation)
+                        var response = await runConvo(convo: convo, transformation: transformationType.transformation)
+
                         // FIXME: this is super janky and will crash atm if we try to prune too many times.
                         //      originally was pruning for the failing case of too many tokens being sent.
                         //      we really should be validating token count before sending the chat and pruning if
@@ -63,15 +65,16 @@ public final class GPTSessionImpl: GPTSession {
                         while response.failed {
                             print("pruning convo and trying again. convo count: \(convo.count)")
                             convo = rootConvo + convo.suffix(convo.count - rootConvo.count - 1)
-                            response = await runConvo(convo: convo, transformation: transformation)
+                            response = await runConvo(convo: convo, transformation: transformationType.transformation)
                         }
                         convo.append(response.chatMessage!)
-                        transformationOutputs.append(response.outputModel!)
+                        let processedOutput = await anyTransformation.postProcess(output: response.outputModel!)
+                        transformationOutputs.append(processedOutput)
                         print("\n---OUTPUT----")
                         print(response.outputModel!.asJson!)
                     }
                 }
-                if let agg = transformation.aggregationTransformer(transformationOutputs) {
+                if let agg = anyTransformation.aggregationTransformer(transformationOutputs) {
                     currentOutput = [agg]
                 } else {
                     currentOutput = transformationOutputs

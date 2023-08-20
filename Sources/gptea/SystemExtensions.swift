@@ -33,14 +33,38 @@ public extension GptTransformationConfig {
         return nil
     }
 
-    func preprocess<I: GptModel, O: GptModel>(input: I) async -> O where I == Input, O == ProcessedInput {
-        return input as! O
-    }
-
-    func transformationChats(input: ProcessedInput) -> [Chat] {
+    func transformationChats(input: Input) -> [Chat] {
         return transformationPrompts(input: input).map {
             "[Task]\($0). [OutputFormat]:\(Output.getClassName()) as JSON.[/OutputFormat][/Task]".asChat(.user)
         }
+    }
+}
+
+extension GptTransformationType {
+    var asAnyTransformation: AnyTransformation {
+        switch self {
+        case .standard(let config):
+            return AnyTransformation(standardTransformation: config)
+        case .preProcess(let config):
+            return AnyTransformation(preProcessableTransformation: config)
+        case .postProcess(let config):
+            return AnyTransformation(postProcessableTransformation: config)
+        }
+    }
+
+    var transformation: any GptTransformationConfig {
+        switch self {
+        case .standard(let config):
+            return config
+        case .preProcess(let config):
+            return config
+        case .postProcess(let config):
+            return config
+        }
+    }
+
+    func getSystemPrompt() -> String {
+        return transformation.getSystemPrompt()
     }
 }
 

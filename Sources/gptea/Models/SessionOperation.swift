@@ -3,10 +3,10 @@ import OpenAI
 
 public struct SessionOperation {
     public let mainPrompt: String
-    public let transformations: [any GptTransformationConfig]
+    public let transformations: [GptTransformationType]
     public let contextProviders: [any ContextProvider]
 
-    public init(mainPrompt: String, transformations: [any GptTransformationConfig], contextProviders: [any ContextProvider] = []) {
+    public init(mainPrompt: String, transformations: [GptTransformationType], contextProviders: [any ContextProvider] = []) {
         self.mainPrompt = mainPrompt
         self.transformations = transformations
         self.contextProviders = contextProviders
