@@ -9,14 +9,14 @@ public protocol GPTSession {
 
 public protocol GptModel: Codable {
     static func makeEmpty() -> Self
+    /// Describes the model. Provide details about what each key is for. Its recommended to include
+    /// the name of your model's class.
+    static var systemDescription: String { get }
     var asText: String { get }
 }
 
 public protocol SystemPromptable {
     associatedtype ModelType: GptModel
-    /// Describes the `Output` model. Provide details about what each key is for. Its recommended to include
-    /// the name of your model's class.
-    var outputDescription: String { get }
 }
 
 public protocol GptTransformationConfig: SystemPromptable where ModelType == Output {

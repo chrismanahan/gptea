@@ -13,7 +13,7 @@ public struct SessionOperation {
     }
 
     var asSystemChat: Chat {
-        let transformationString = transformations.compactMap { $0.getSystemPrompt() }.joined(separator: "\n\n")
+        let transformationString = GptTransformationsUtil.mapDedupedSystemPrompts(transformations).joined(separator: "\n\n")
         let contextProvidersString = contextProviders.compactMap { $0.getSystemPrompt() }.joined(separator: "\n\n")
         return """
         \(mainPrompt)\n

@@ -10,5 +10,7 @@ public extension String {
 extension String: GptModel {
     public static func makeEmpty() -> String { "" }
 
+    public static var systemDescription: String { "" }
+
     public var asText: String { self }
 }

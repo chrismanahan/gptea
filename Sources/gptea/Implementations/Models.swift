@@ -10,6 +10,10 @@ extension GptModel where Self: MarkdownRepresentable {
 }
 
 struct BulletedList: GptModel {
+    static var systemDescription: String {
+        "A BulletedList is a list of easily digestible chunks of information that makes it easier to understand the input. When creating a BulletedList, elaborate and expand on the original output."
+    }
+
     struct BulletedItem: GptModel {
         let text: String
         // TODO: add subitems
@@ -17,6 +21,8 @@ struct BulletedList: GptModel {
         static func makeEmpty() -> BulletedList.BulletedItem {
             return BulletedItem(text: "")
         }
+
+        static var systemDescription: String { "" }
 
         var asText: String { text }
     }
@@ -37,6 +43,10 @@ struct Haiku: GptModel {
     let line2: String
     let line3: String
 
+    static var systemDescription: String {
+        "A Haiku is a form of traditional Japanese poetry that consists of three lines. The first and third lines have 5 syllables each, and the second line has 7 syllables."
+    }
+
     var asText: String {
         "\(line1)\n\(line2)\n\(line3)"
     }
@@ -46,61 +56,16 @@ struct Haiku: GptModel {
     }
 }
 
-struct SimpleText: GptModel {
-    let text: String
-
-    var asText: String {
-        text
-    }
-
-    static func makeEmpty() -> SimpleText {
-        return SimpleText(text: "")
-    }
-}
-
-struct QuestionList: GptModel {
-    let questions: [String]
-
-    var asText: String {
-        questions.joined(separator: "\n")
-    }
-
-    static func makeEmpty() -> QuestionList {
-        return QuestionList(questions: [""])
-    }
-}
-
-struct ActionItems: GptModel {
-    let items: [String]
-
-    var asText: String {
-        items.joined(separator: "\n")
-    }
-
-    static func makeEmpty() -> ActionItems {
-        return ActionItems(items: [""])
-    }
-}
-
-struct RhymingCouplet: GptModel {
-    let line1: String
-    let line2: String
-
-    var asText: String {
-        "\(line1)\n\(line2)"
-    }
-
-    static func makeEmpty() -> RhymingCouplet {
-        return RhymingCouplet(line1: "", line2: "")
-    }
-}
-
 struct Limerick: GptModel {
     let line1: String
     let line2: String
     let line3: String
     let line4: String
     let line5: String
+
+    static var systemDescription: String {
+        "A Limerick is a humorous verse form of five lines with AABBA rhyme scheme."
+    }
 
     var asText: String {
         "\(line1)\n\(line2)\n\(line3)\n\(line4)\n\(line5)"
@@ -113,6 +78,10 @@ struct Limerick: GptModel {
 
 struct Acrostic: GptModel {
     let lines: [String]
+
+    static var systemDescription: String {
+        "An Acrostic is a poem or other form of writing in which the first letter, syllable, or word of each line spells out a word or message."
+    }
 
     var asText: String {
         lines.joined(separator: "\n")

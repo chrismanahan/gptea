@@ -14,7 +14,7 @@ extension GptModel {
 public extension SystemPromptable {
     func getSystemPrompt() -> String {
         return """
-            [Task]\(outputDescription)
+            [Task]\(ModelType.systemDescription)
             Use this empty JSON blob to generate instances of \(ModelType.getClassName()):
             \(ModelType.asEmptyJson())
             [/Task]
