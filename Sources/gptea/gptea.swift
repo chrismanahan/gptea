@@ -33,6 +33,7 @@ public protocol GptTransformationConfig: SystemPromptable where ModelType == Out
 public protocol PreProcessableTransformationconfig: GptTransformationConfig {
     associatedtype ProcessedInput: GptModel
 
+    func transformationPrompts<T: GptModel>(input: T) -> [String] where T == ProcessedInput
     func preProcess<I: GptModel, O: GptModel>(input: I) async -> O where I == Input, O == ProcessedInput
 }
 

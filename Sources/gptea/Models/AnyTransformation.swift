@@ -48,7 +48,7 @@ public class AnyTransformation {
         _postprocess = { output in output }
 
         _transformationChats = { input in
-            guard let input = input as? T.Input else { return [] }
+            guard let input = input as? T.ProcessedInput else { return [] }
             return preProcessableTransformation.transformationChats(input: input)
         }
     }

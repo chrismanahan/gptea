@@ -35,7 +35,19 @@ public extension GptTransformationConfig {
 
     func transformationChats(input: Input) -> [Chat] {
         return transformationPrompts(input: input).map {
-            "[Task]\($0). [OutputFormat]:\(Output.getClassName()) as JSON.[/OutputFormat][/Task]".asChat(.user)
+            formattedTransformationPrompts(prompt: $0).asChat(.user)
+        }
+    }
+
+    func formattedTransformationPrompts(prompt: String) -> String {
+        return "[Task]\(prompt). [OutputFormat]:\(Output.getClassName()) as JSON.[/OutputFormat][/Task]"
+    }
+}
+
+public extension PreProcessableTransformationconfig {
+    func transformationChats(input: ProcessedInput) -> [Chat] {
+        return transformationPrompts(input: input).map {
+            formattedTransformationPrompts(prompt: $0).asChat(.user)
         }
     }
 }
